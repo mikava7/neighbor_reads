@@ -5,7 +5,7 @@ async function seedBooks(client) {
   console.log("Starting seedBooks function");
 
   try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-oosp"`;
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Create the "books" table if it doesn't exist
     const createTable = await sql`
@@ -43,3 +43,15 @@ async function seedBooks(client) {
     throw error;
   }
 }
+
+async function main() {
+  const client = await db.connect();
+
+  await seedBooks(client);
+  await client.end();
+}
+
+main().catch((error) => {
+  console.error("An error occured while attempting to seed the database:");
+  error;
+});
