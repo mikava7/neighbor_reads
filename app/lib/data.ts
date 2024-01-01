@@ -8,7 +8,7 @@ export async function fetchBooks() {
   noStore();
 
   try {
-    const data = await sql<Book>`SELECT * FROM book`;
+    const data = await sql<Book>`SELECT * FROM books`;
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
