@@ -1,4 +1,4 @@
-const { db, sql } = require("@vercel/postgres");
+import { pool } from "../utils/db.js";
 const { books } = require("../app/lib/books-data.js");
 
 async function seedBooks(client) {
@@ -8,7 +8,7 @@ async function seedBooks(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Create the "books" table if it doesn't exist
-    const createTable = await sql`
+    const createTable = await pool.query`
       CREATE TABLE IF NOT EXISTS books (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         author VARCHAR(255) NOT NULL,
@@ -46,15 +46,17 @@ async function seedBooks(client) {
     throw error;
   }
 }
-
 async function main() {
-  const client = await db.connect();
+  // Use pool.connect() instead of db.connect()
+  const client = await pool.connect();
 
   await seedBooks(client);
-  await client.end();
+  await client.release(); // You should release the client back to the pool
 }
 
 main().catch((error) => {
-  console.error("An error occured while attempting to seed the database:");
-  error;
+  console.error(
+    "An error occurred while attempting to seed the database:",
+    error
+  );
 });
