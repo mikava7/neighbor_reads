@@ -1,4 +1,8 @@
 import { Pool } from "pg";
+import dotenv from "dotenv";
+
+// Load environment variables from a .env file
+dotenv.config();
 
 export const pool = new Pool({
   user: process.env.USER_NAME,

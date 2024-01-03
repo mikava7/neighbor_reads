@@ -14,6 +14,9 @@ async function seedBooks(client) {
         author VARCHAR(255) NOT NULL,
         country VARCHAR(255) NOT NULL,
         link VARCHAR(255) NOT NULL,
+        imageLink VARCHAR(255) NOT NULL,
+        language VARCHAR(255) NOT NULL,
+
         pages INTEGER NOT NULL,
         title VARCHAR(255) NOT NULL,
         year INTEGER NOT NULL

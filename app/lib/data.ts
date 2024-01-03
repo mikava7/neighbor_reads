@@ -1,17 +1,12 @@
-import { sql } from "@vercel/postgres";
-import { Book } from "./definitions.js";
-import { unstable_noStore as noStore } from "next/cache";
+import { pool } from "@/utils/connectToDB.js";
 
 export async function fetchBooks() {
-  // Add noStore() here prevent the response from being cached.
-  // This is equivalent to in fetch(..., {cache: 'no-store'}).
-  noStore();
-
   try {
-    const data = await sql<Book>`SELECT * FROM books`;
-    return data.rows;
+    // Query the database using the pool
+    const result = await pool.query("SELECT * FROM books");
+    return result.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch revenue data.");
+    throw new Error("Failed to fetch books data.");
   }
 }
