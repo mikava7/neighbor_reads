@@ -2,10 +2,10 @@ import { Pool } from "pg";
 
 // Create a pool for PostgreSQL connections (configure with your database details)
 const pool = new Pool({
-  user: "postgres",
+  user: "iraklisql",
   host: "127.0.0.1",
-  database: "neighbor_reads",
-  password: "JOANmadu365A",
+  database: "testdata",
+  password: "1991",
   port: "5432",
 });
 
